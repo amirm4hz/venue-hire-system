@@ -92,11 +92,11 @@ public class VenueHireSystem {
     try {
       hireFee = Integer.parseInt(hireFeeInput);
     } catch (NumberFormatException e) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hirefee", "");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
       return;
     }
     if (hireFee < 0) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hirefee", " positive");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
       return;
     }
 
