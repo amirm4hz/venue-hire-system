@@ -8,17 +8,37 @@ import nz.ac.auckland.se281.Types.FloralType;
 public class VenueHireSystem {
 
   private List<VenueHireSystem> venues;
+  private String venueName;
+  private String venueCode;
+  private String capacity;
+  private String hireFee;
 
   public VenueHireSystem() {
     this.venues = new ArrayList<>();
   }
 
   public void printVenues() {
-    MessageCli.NO_VENUES.printMessage();
+    if (venues.isEmpty()) {
+      MessageCli.NO_VENUES.printMessage();
+    }
   }
 
   public void createVenue(
-      String venueName, String venueCode, String capacityInput, String hireFeeInput) {}
+      String venueName, String venueCode, String capacityInput, String hireFeeInput) {
+    this.venueName = venueName;
+    this.venueCode = venueCode;
+    this.capacity = capacityInput;
+    this.hireFee = hireFeeInput;
+
+    if (venueName.trim().isEmpty()) {
+      MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
+    }
+    for (VenueHireSystem existingVenues : venues) {
+      if (existingVenues.venueCode == venueCode) {
+        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, existingVenues.venueName);
+      }
+    }
+  }
 
   public void setSystemDate(String dateInput) {
     // TODO implement this method
