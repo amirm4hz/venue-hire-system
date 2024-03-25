@@ -38,6 +38,13 @@ public class VenueHireSystem {
         MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, existingVenues.venueName);
       }
     }
+    if (Integer.parseInt(capacity) < 0) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(capacity, "positive");
+    }
+    if (capacity.matches("\\d")) {
+    } else {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(capacity);
+    }
   }
 
   public void setSystemDate(String dateInput) {
