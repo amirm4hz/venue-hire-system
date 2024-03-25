@@ -20,6 +20,12 @@ public class VenueHireSystem {
   public void printVenues() {
     if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
+    } else if (venues.size() == 1) {
+      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+    } else if (venues.size() == 1) {
+      MessageCli.NUMBER_VENUES.printMessage("are", "one", "");
+    } else {
+      MessageCli.NUMBER_VENUES.printMessage("are", String.valueOf(venues.size()), "");
     }
   }
 
@@ -30,20 +36,51 @@ public class VenueHireSystem {
     this.capacity = capacityInput;
     this.hireFee = hireFeeInput;
 
-    if (venueName.trim().isEmpty()) {
+    if (this.validInputs()) {
+      VenueHireSystem newVenue = new VenueHireSystem();
+      newVenue.venueName = venueName;
+      newVenue.venueCode = venueCode;
+      newVenue.capacity = capacity;
+      newVenue.hireFee = hireFee;
+      venues.add(newVenue);
+      printVenues();
+      for (VenueHireSystem printVenues : venues) {
+        MessageCli.VENUE_ENTRY.printMessage(
+            printVenues.venueName,
+            printVenues.venueCode,
+            printVenues.capacity,
+            printVenues.hireFee);
+      }
+    }
+  }
+
+  public boolean validInputs() {
+    if (venueName.trim().isBlank()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
     }
     for (VenueHireSystem existingVenues : venues) {
-      if (existingVenues.venueCode == venueCode) {
+      if (existingVenues.venueCode.equals(venueCode)) {
         MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, existingVenues.venueName);
+        return false;
       }
     }
     if (Integer.parseInt(capacity) < 0) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(capacity, "positive");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(capacity, " positive");
+      return false;
     }
-    if (capacity.matches("\\d")) {
-    } else {
+    if (!capacity.matches("\\d+")) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(capacity);
+      return false;
+    }
+    if (Integer.parseInt(hireFee) < 0) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(hireFee, " positive");
+      return false;
+    }
+    if (!hireFee.matches("\\d+")) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(hireFee);
+      return false;
+    } else {
+      return true;
     }
   }
 
