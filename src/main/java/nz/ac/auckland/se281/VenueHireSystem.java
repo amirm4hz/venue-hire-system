@@ -70,19 +70,19 @@ public class VenueHireSystem {
       }
     }
     if (Integer.parseInt(capacityInput) < 0) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(capacityInput, " positive");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
       return;
     }
     if (!capacityInput.matches("\\d+")) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(capacityInput);
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity");
       return;
     }
     if (Integer.parseInt(hireFeeInput) < 0) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(hireFeeInput, " positive");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hirefee", " positive");
       return;
     }
     if (!hireFeeInput.matches("\\d+")) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(hireFeeInput);
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hirefee");
       return;
     }
 

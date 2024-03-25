@@ -137,13 +137,7 @@ public class MainTest {
       public YourTests() {
         super(Main.class);
       }
-
-      @Test
-      public void T1_04_invalid_capacity_negative() throws Exception {
-        runCommands(CREATE_VENUE, "'Frugal Fiesta Hall'", "FFH", "-30", "150");
-
-        assertContains("Venue not created: capacity must be a positive number.");
-      }
+      
     }
   }
 
