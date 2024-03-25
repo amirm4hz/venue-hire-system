@@ -137,7 +137,6 @@ public class MainTest {
       public YourTests() {
         super(Main.class);
       }
-      
     }
   }
 
