@@ -47,8 +47,8 @@ public class VenueHireSystem {
   }
 
   // logic for print venues
-  // return from isempty so that for loop is skipped and venue names dont print
   public void printVenues() {
+    // return from isempty so that for loop is skipped and venue names dont print
     if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
       return;
@@ -59,6 +59,7 @@ public class VenueHireSystem {
     } else {
       MessageCli.NUMBER_VENUES.printMessage("are", String.valueOf(venues.size()), "s");
     }
+    // for loop to print out all venues on the array list if venues is not empty
     for (Venue printVenues : venues) {
       MessageCli.VENUE_ENTRY.printMessage(
           printVenues.getVenueName(),
@@ -122,6 +123,8 @@ public class VenueHireSystem {
   // this method takes int input of list size from print venues and returns word
   public String intToString(int num) {
     switch (num) {
+        // example: if the size of the array is 2 that will be input for intToString function
+        // then go to case 2 and return the word "two" and that will be input for messagecli
       case 2:
         return "two";
       case 3:
