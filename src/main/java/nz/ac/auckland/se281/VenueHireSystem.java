@@ -7,12 +7,14 @@ import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
 
+  // created new class named venue
   public class Venue {
     private String venueName;
     private String venueCode;
     private String capacity;
     private String hireFee;
 
+    // setting input to my private variables using 'this'
     public Venue(String venueName, String venueCode, String capacityInput, String hireFeeInput) {
       this.venueName = venueName;
       this.venueCode = venueCode;
@@ -20,6 +22,7 @@ public class VenueHireSystem {
       this.hireFee = hireFeeInput;
     }
 
+    // setting all my getters to be used inside print venues and create venues
     public String getVenueName() {
       return venueName;
     }
@@ -43,6 +46,8 @@ public class VenueHireSystem {
     this.venues = new ArrayList<>();
   }
 
+  // logic for print venues
+  // return from isempty so that for loop is skipped and venue names dont print
   public void printVenues() {
     if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
@@ -63,9 +68,11 @@ public class VenueHireSystem {
     }
   }
 
+  // method for create venues
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
 
+    // remove spaces and if venue name is blank print empty name
     if (venueName.trim().isBlank()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
       return;
@@ -77,6 +84,7 @@ public class VenueHireSystem {
         return;
       }
     }
+    // parsing string capacity input as an integer and testing to see if valid integer
     int capacity;
     try {
       capacity = Integer.parseInt(capacityInput);
@@ -84,10 +92,12 @@ public class VenueHireSystem {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
       return;
     }
+    // checking if capacity int is less than zero (first check if its valid integer)
     if (capacity < 0) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
       return;
     }
+    // again parsing string hire fee input as an integer and testing for validity
     int hireFee;
     try {
       hireFee = Integer.parseInt(hireFeeInput);
@@ -95,16 +105,21 @@ public class VenueHireSystem {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
       return;
     }
+    // checking if hire fee is less than 0 (first checking to see if its a valid integer)
     if (hireFee < 0) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
       return;
     }
-
+    // if everything is valid and passes all tests it will not leave the method
+    // once reached here new venue is added to the array list and prints success message
     Venue newVenue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
     venues.add(newVenue);
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   }
 
+  // switch case to convert the size of the venue list if its between 2-9 to word form
+  // this reduces the code in print venues making it easier to read
+  // this method takes int input of list size from print venues and returns word
   public String intToString(int num) {
     switch (num) {
       case 2:
