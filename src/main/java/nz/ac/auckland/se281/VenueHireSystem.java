@@ -7,6 +7,7 @@ import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
 
+  private String setDate = null;
   private List<Venue> venues;
 
   public VenueHireSystem() {
@@ -114,11 +115,16 @@ public class VenueHireSystem {
   }
 
   public void setSystemDate(String dateInput) {
-    // TODO implement this method
+    this.setDate = dateInput;
+    MessageCli.DATE_SET.printMessage(setDate);
   }
 
   public void printSystemDate() {
-    // TODO implement this method
+    if (setDate.equals(null)) {
+      System.out.println("Current system date is not set.");
+    } else {
+      MessageCli.CURRENT_DATE.printMessage(setDate);
+    }
   }
 
   public void makeBooking(String[] options) {
