@@ -115,20 +115,23 @@ public class VenueHireSystem {
   }
 
   public void setSystemDate(String dateInput) {
-    this.setDate = dateInput;
+    this.setDate = dateInput; // this is setting the initialised date to the input date
     MessageCli.DATE_SET.printMessage(setDate);
   }
 
   public void printSystemDate() {
-    if (setDate != null) {
+    if (setDate != null) { // if date been set by user this statement will pass
       MessageCli.CURRENT_DATE.printMessage(setDate);
-    } else {
+    } else { // if date has not been set this print statement will return
       System.out.println("Current system date is not set.");
     }
   }
 
   public void makeBooking(String[] options) {
-    // TODO implement this method
+
+    if (venues.isEmpty()) {
+      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+    }
   }
 
   public void printBookings(String venueCode) {
