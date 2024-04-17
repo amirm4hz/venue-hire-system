@@ -7,7 +7,7 @@ import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
 
-  private String setDate = null;
+  private String setDate = "";
   private List<Venue> venues;
 
   public VenueHireSystem() {
@@ -120,7 +120,7 @@ public class VenueHireSystem {
   }
 
   public void printSystemDate() {
-    if (setDate != null) { // if date been set by user this statement will pass
+    if (!this.setDate.isEmpty()) { // if date been set by user this statement will pass
       MessageCli.CURRENT_DATE.printMessage(setDate);
     } else { // if date has not been set this print statement will return
       System.out.println("Current system date is not set.");
@@ -131,6 +131,9 @@ public class VenueHireSystem {
 
     if (venues.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+    }
+    if (setDate.isEmpty()) {
+      MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
     }
   }
 
