@@ -120,10 +120,10 @@ public class VenueHireSystem {
   }
 
   public void printSystemDate() {
-    if (setDate.equals(null)) {
-      System.out.println("Current system date is not set.");
-    } else {
+    if (setDate != null) {
       MessageCli.CURRENT_DATE.printMessage(setDate);
+    } else {
+      System.out.println("Current system date is not set.");
     }
   }
 
