@@ -9,9 +9,11 @@ public class VenueHireSystem {
 
   private String setDate = "";
   private List<Venue> venues;
+  private List<Bookings> bookings;
 
   public VenueHireSystem() {
     this.venues = new ArrayList<>();
+    this.bookings = new ArrayList<>();
   }
 
   // logic for print venues
@@ -176,6 +178,20 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], setDate);
       return;
     }
+
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(options[0])) {
+
+        // check if the venue input has been previously booked
+        for (Bookings booking : bookings) {
+          if (booking.getBookingDate().equals(options[1])) {
+            MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(venueName, options[1]);
+            return;
+          }
+        }
+      }
+    }
+
     for (Venue venue : venues) {
       if (venue.getVenueCode().equals(options[0])) {
         if (Integer.parseInt(venue.getCapacity()) < Integer.parseInt(options[3])) {
@@ -193,8 +209,11 @@ public class VenueHireSystem {
       }
     }
 
+    String referenceNumber = BookingReferenceGenerator.generateBookingReference();
+    Bookings newBooking = new Bookings(referenceNumber, options[2], options[1], options[3]);
+    bookings.add(newBooking);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-        BookingReferenceGenerator.generateBookingReference(), venueName, options[1], options[3]);
+        referenceNumber, venueName, options[1], options[3]);
   }
 
   public void printBookings(String venueCode) {
