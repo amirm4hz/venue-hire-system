@@ -194,13 +194,13 @@ public class VenueHireSystem {
 
     for (Venue venue : venues) {
       if (venue.getVenueCode().equals(options[0])) {
-        if (Integer.parseInt(venue.getCapacity()) < Integer.parseInt(options[3])) {
+        int capacity = Integer.parseInt(venue.getCapacity());
+        if (capacity < Integer.parseInt(options[3])) {
           MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
               options[3], venue.getCapacity(), venue.getCapacity());
           options[3] = venue.getCapacity();
           break;
         }
-        int capacity = Integer.parseInt(venue.getCapacity());
         int smallerCapacity = capacity / 4;
         if (smallerCapacity > (Integer.parseInt(options[3]))) {
           MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
