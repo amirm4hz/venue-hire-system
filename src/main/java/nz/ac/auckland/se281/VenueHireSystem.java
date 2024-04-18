@@ -127,13 +127,23 @@ public class VenueHireSystem {
     }
   }
 
+  public void splitYear(String date) {
+    String oldFormat = date;
+    String[] dateParts = oldFormat.split("/");
+    int day = Integer.parseInt(dateParts[0]);
+    int month = Integer.parseInt(dateParts[1]);
+    int year = Integer.parseInt(dateParts[2]);
+  }
+
   public void makeBooking(String[] options) {
 
-    if (venues.isEmpty()) {
-      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
-    }
     if (setDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+      return;
+    }
+    if (venues.isEmpty()) {
+      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+      return;
     }
   }
 
