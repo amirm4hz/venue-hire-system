@@ -129,6 +129,9 @@ public class VenueHireSystem {
 
   public void makeBooking(String[] options) {
 
+    boolean venueNotFound = true;
+    String venueName = "";
+
     if (setDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
@@ -137,7 +140,14 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     }
-    if (!venues.contains(options[0])) {
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(options[0])) {
+        venueNotFound = false;
+        venueName = venue.getVenueName();
+        break;
+      }
+    }
+    if (venueNotFound) {
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
       return;
     }
@@ -164,6 +174,9 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], setDate);
       return;
     }
+
+    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
+        BookingReferenceGenerator.generateBookingReference(), venueName, options[1], options[3]);
   }
 
   public void printBookings(String venueCode) {
