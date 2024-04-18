@@ -127,14 +127,6 @@ public class VenueHireSystem {
     }
   }
 
-  public void splitYear(String date) {
-    String oldFormat = date;
-    String[] dateParts = oldFormat.split("/");
-    int day = Integer.parseInt(dateParts[0]);
-    int month = Integer.parseInt(dateParts[1]);
-    int year = Integer.parseInt(dateParts[2]);
-  }
-
   public void makeBooking(String[] options) {
 
     if (setDate.isEmpty()) {
@@ -143,6 +135,33 @@ public class VenueHireSystem {
     }
     if (venues.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+      return;
+    }
+    if (!venues.contains(options[0])) {
+      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
+      return;
+    }
+
+    String[] dateParts = options[1].split("/");
+    int day = Integer.parseInt(dateParts[0]);
+    int month = Integer.parseInt(dateParts[1]);
+    int year = Integer.parseInt(dateParts[2]);
+
+    String[] dateNewParts = setDate.split("/");
+    int dayNow = Integer.parseInt(dateNewParts[0]);
+    int monthNow = Integer.parseInt(dateNewParts[1]);
+    int yearNow = Integer.parseInt(dateNewParts[2]);
+
+    if (year < yearNow) {
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], setDate);
+      return;
+    }
+    if (year == yearNow && month < monthNow) {
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], setDate);
+      return;
+    }
+    if (year == yearNow && month == monthNow && day < dayNow) {
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], setDate);
       return;
     }
   }
