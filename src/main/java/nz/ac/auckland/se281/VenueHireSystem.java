@@ -132,45 +132,47 @@ public class VenueHireSystem {
     boolean venueNotFound = true;
     String venueName = "";
 
-    if (setDate.isEmpty()) {
+    if (setDate.isEmpty()) { // check if date has been set
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
     }
-    if (venues.isEmpty()) {
+    if (venues.isEmpty()) { // check if there are any venues in the system
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     }
-    for (Venue venue : venues) {
+    for (Venue venue : venues) { // check if venue code exists in the system
       if (venue.getVenueCode().equals(options[0])) {
         venueNotFound = false;
         venueName = venue.getVenueName();
         break;
       }
     }
-    if (venueNotFound) {
+    if (venueNotFound) { // if venue code does not exist in the system
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(options[0]);
       return;
     }
 
-    String[] dateParts = options[1].split("/");
+    String[] dateParts = options[1].split("/"); // split the input date into day month year
     int day = Integer.parseInt(dateParts[0]);
     int month = Integer.parseInt(dateParts[1]);
     int year = Integer.parseInt(dateParts[2]);
 
-    String[] dateNewParts = setDate.split("/");
+    String[] dateNewParts = setDate.split("/"); // split the system date into day month year
     int dayNow = Integer.parseInt(dateNewParts[0]);
     int monthNow = Integer.parseInt(dateNewParts[1]);
     int yearNow = Integer.parseInt(dateNewParts[2]);
 
-    if (year < yearNow) {
+    if (year < yearNow) { // check if the year is in the past
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], setDate);
       return;
     }
-    if (year == yearNow && month < monthNow) {
+    if (year == yearNow && month < monthNow) { // if year is the same check if month is in the past
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], setDate);
       return;
     }
-    if (year == yearNow && month == monthNow && day < dayNow) {
+    if (year == yearNow
+        && month == monthNow
+        && day < dayNow) { // if year and month are the same check if day is in the past
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], setDate);
       return;
     }
