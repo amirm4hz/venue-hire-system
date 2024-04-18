@@ -176,6 +176,22 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(options[1], setDate);
       return;
     }
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(options[0])) {
+        if (Integer.parseInt(venue.getCapacity()) < Integer.parseInt(options[3])) {
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+              options[3], venue.getCapacity(), venue.getCapacity());
+          options[3] = venue.getCapacity();
+          break;
+        }
+        if (Integer.parseInt(venue.getCapacity()) < (Integer.parseInt(options[3]) / 4)) {
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+              options[3], intToString((Integer.parseInt(options[3]) / 4)), venue.getCapacity());
+          options[3] = intToString((Integer.parseInt(options[3]) / 4));
+          break;
+        }
+      }
+    }
 
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
         BookingReferenceGenerator.generateBookingReference(), venueName, options[1], options[3]);
