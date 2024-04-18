@@ -200,10 +200,12 @@ public class VenueHireSystem {
           options[3] = venue.getCapacity();
           break;
         }
-        if (Integer.parseInt(venue.getCapacity()) < (Integer.parseInt(options[3]) / 4)) {
+        int capacity = Integer.parseInt(venue.getCapacity());
+        int smallerCapacity = capacity / 4;
+        if (smallerCapacity > (Integer.parseInt(options[3]))) {
           MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
-              options[3], intToString((Integer.parseInt(options[3]) / 4)), venue.getCapacity());
-          options[3] = intToString((Integer.parseInt(options[3]) / 4));
+              options[3], Integer.toString(smallerCapacity), venue.getCapacity());
+          options[3] = Integer.toString(smallerCapacity);
           break;
         }
       }
