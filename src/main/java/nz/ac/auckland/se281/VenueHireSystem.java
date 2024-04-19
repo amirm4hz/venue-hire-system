@@ -70,20 +70,23 @@ public class VenueHireSystem {
     }
     return (nextAvailableDate
             != null) // if next available date is not null return the date in the format
-                     // (dd/MM/yyyy)
+        // (dd/MM/yyyy)
         ? nextAvailableDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
         : "No available dates";
   }
 
   public boolean isBooked(String venueCode, LocalDate date) {
+    // for loop to check if booking exists for venue
     for (Bookings booking : bookings) {
       LocalDate bookingDate =
-          LocalDate.parse(booking.getBookingDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+          LocalDate.parse(
+              booking.getBookingDate(),
+              DateTimeFormatter.ofPattern("dd/MM/yyyy")); // parse the booking date
       if (booking.getVenueCode().equals(venueCode) && bookingDate.equals(date)) {
-        return true;
+        return true; // if the venue code and date are the same return true
       }
     }
-    return false;
+    return false; // otherwise return false as the venue code and date are not the same
   }
 
   // method for create venues
@@ -274,18 +277,20 @@ public class VenueHireSystem {
     String venueName = "";
     boolean venueNotFound = true;
 
-    for (Venue venue : venues) {
+    for (Venue venue : venues) { // check if venue code exists in the system
       if (venue.getVenueCode().equals(venueCode)) {
         venueNotFound = false;
         venueName = venue.getVenueName();
         break;
       }
     }
+    // if venue code does not exist in the system return venue not found message
     if (venueNotFound) {
       MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
       return;
     }
 
+    // print bookings for the venue
     MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venueName);
     boolean bookingFound = false;
     for (Bookings booking : bookings) {
@@ -297,6 +302,8 @@ public class VenueHireSystem {
         }
       }
     }
+
+    // if no bookings found for the venue print no bookings message
     if (!bookingFound) {
       MessageCli.PRINT_BOOKINGS_NONE.printMessage(venueName);
     }
