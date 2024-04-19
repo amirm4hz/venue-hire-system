@@ -269,9 +269,11 @@ public class VenueHireSystem {
   public void printBookings(String venueCode) {
     String venueName = "";
     boolean venueNotFound = true;
+
     for (Venue venue : venues) {
       if (venue.getVenueCode().equals(venueCode)) {
         venueNotFound = false;
+        venueName = venue.getVenueName();
         break;
       }
     }
@@ -279,11 +281,7 @@ public class VenueHireSystem {
       MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
       return;
     }
-    for (Venue venue : venues) {
-      if (venue.getVenueCode().equals(venueCode)) {
-        venueName = venue.getVenueName();
-      }
-    }
+
     MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venueName);
     boolean bookingFound = false;
     for (Bookings booking : bookings) {
@@ -296,7 +294,7 @@ public class VenueHireSystem {
       }
     }
     if (!bookingFound) {
-      MessageCli.PRINT_BOOKINGS_NONE.printMessage(venueCode);
+      MessageCli.PRINT_BOOKINGS_NONE.printMessage(venueName);
     }
   }
 
