@@ -1,5 +1,7 @@
 package nz.ac.auckland.se281;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import nz.ac.auckland.se281.Types.CateringType;
@@ -41,8 +43,43 @@ public class VenueHireSystem {
           printVenues.getVenueCode(),
           printVenues.getCapacity(),
           printVenues.getHireFee(),
-          setDate);
+          getNextAvailableDate(printVenues.getVenueCode()));
     }
+  }
+
+  public String getNextAvailableDate(String venueCode) {
+    boolean bookingExistsForVenue = false;
+    LocalDate nextAvailableDate = null;
+    for (Bookings booking : bookings) {
+      if (booking.getVenueCode().equals(venueCode)) {
+        bookingExistsForVenue = true;
+        LocalDate bookingDate =
+            LocalDate.parse(booking.getBookingDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate nextDay = bookingDate.plusDays(1);
+        while (isBooked(venueCode, nextDay)) {
+          nextDay = nextDay.plusDays(1);
+        }
+        nextAvailableDate = nextDay;
+        break;
+      }
+    }
+    if (!bookingExistsForVenue) {
+      return setDate;
+    }
+    return (nextAvailableDate != null)
+        ? nextAvailableDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        : "No available dates";
+  }
+
+  public boolean isBooked(String venueCode, LocalDate date) {
+    for (Bookings booking : bookings) {
+      LocalDate bookingDate =
+          LocalDate.parse(booking.getBookingDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+      if (booking.getVenueCode().equals(venueCode) && bookingDate.equals(date)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   // method for create venues
