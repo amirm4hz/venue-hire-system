@@ -48,25 +48,29 @@ public class VenueHireSystem {
   }
 
   public String getNextAvailableDate(String venueCode) {
-    boolean bookingExistsForVenue = false;
+    boolean bookingExistsForVenue = false; // boolean to check if booking exists for venue
     LocalDate nextAvailableDate = null;
-    for (Bookings booking : bookings) {
+    for (Bookings booking : bookings) { // for loop to check if booking exists for venue
       if (booking.getVenueCode().equals(venueCode)) {
         bookingExistsForVenue = true;
         LocalDate bookingDate =
-            LocalDate.parse(booking.getBookingDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        LocalDate nextDay = bookingDate.plusDays(1);
+            LocalDate.parse(
+                booking.getBookingDate(),
+                DateTimeFormatter.ofPattern("dd/MM/yyyy")); // parse the booking date
+        LocalDate nextDay = bookingDate.plusDays(1); // add one day to the booking date
         while (isBooked(venueCode, nextDay)) {
-          nextDay = nextDay.plusDays(1);
+          nextDay = nextDay.plusDays(1); // if the next day is booked add another day
         }
         nextAvailableDate = nextDay;
         break;
       }
     }
-    if (!bookingExistsForVenue) {
+    if (!bookingExistsForVenue) { // if no booking exists for venue return the set date
       return setDate;
     }
-    return (nextAvailableDate != null)
+    return (nextAvailableDate
+            != null) // if next available date is not null return the date in the format
+                     // (dd/MM/yyyy)
         ? nextAvailableDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
         : "No available dates";
   }
