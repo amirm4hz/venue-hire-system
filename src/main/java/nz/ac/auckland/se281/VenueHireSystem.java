@@ -266,7 +266,39 @@ public class VenueHireSystem {
         referenceNumber, venueName, options[1], options[3]);
   }
 
-  public void printBookings(String venueCode) {}
+  public void printBookings(String venueCode) {
+    String venueName = "";
+    boolean venueNotFound = true;
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(venueCode)) {
+        venueNotFound = false;
+        break;
+      }
+    }
+    if (venueNotFound) {
+      MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+      return;
+    }
+    for (Venue venue : venues) {
+      if (venue.getVenueCode().equals(venueCode)) {
+        venueName = venue.getVenueName();
+      }
+    }
+    MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venueName);
+    boolean bookingFound = false;
+    for (Bookings booking : bookings) {
+      if (booking.getVenueCode().equals(venueCode)) {
+        bookingFound = true;
+        if (bookingFound) {
+          MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(
+              booking.getBookingReference(), booking.getBookingDate());
+        }
+      }
+    }
+    if (!bookingFound) {
+      MessageCli.PRINT_BOOKINGS_NONE.printMessage(venueCode);
+    }
+  }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     // TODO implement this method
