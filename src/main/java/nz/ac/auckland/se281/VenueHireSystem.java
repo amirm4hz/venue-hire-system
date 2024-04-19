@@ -22,6 +22,11 @@ public class VenueHireSystem {
     if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
       return;
+    }
+    // if their is no set date we cannot print the venues
+    if (this.setDate.isEmpty()) {
+      MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+      return;
     } else if (venues.size() == 1) {
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
     } else if (venues.size() < 10) {
@@ -35,7 +40,8 @@ public class VenueHireSystem {
           printVenues.getVenueName(),
           printVenues.getVenueCode(),
           printVenues.getCapacity(),
-          printVenues.getHireFee());
+          printVenues.getHireFee(),
+          setDate);
     }
   }
 
@@ -182,7 +188,7 @@ public class VenueHireSystem {
     for (Venue venue : venues) {
       if (venue.getVenueCode().equals(options[0])) {
 
-        // check if the venue input has been previously booked
+        // check if the venue input has been previously booked on the same date
         for (Bookings booking : bookings) {
           if (booking.getBookingDate().equals(options[1])) {
             MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(venueName, options[1]);
@@ -194,6 +200,8 @@ public class VenueHireSystem {
 
     for (Venue venue : venues) {
       if (venue.getVenueCode().equals(options[0])) {
+        // stopping at the venue code that equals the input venue code
+        // converting the capacity to an integer
         int capacity = Integer.parseInt(venue.getCapacity());
         if (capacity < Integer.parseInt(options[3])) {
           MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
@@ -201,6 +209,7 @@ public class VenueHireSystem {
           options[3] = venue.getCapacity();
           break;
         }
+        // if 25% of the capacity is greater than the input number of attendees then adjust
         int smallerCapacity = capacity / 4;
         if (smallerCapacity > (Integer.parseInt(options[3]))) {
           MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
@@ -211,16 +220,16 @@ public class VenueHireSystem {
       }
     }
 
+    // if all checks pass then a new booking is created and added to the array list
     String referenceNumber = BookingReferenceGenerator.generateBookingReference();
-    Bookings newBooking = new Bookings(referenceNumber, options[2], options[1], options[3]);
+    Bookings newBooking =
+        new Bookings(referenceNumber, options[2], options[1], options[3], options[0]);
     bookings.add(newBooking);
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
         referenceNumber, venueName, options[1], options[3]);
   }
 
-  public void printBookings(String venueCode) {
-    // TODO implement this method
-  }
+  public void printBookings(String venueCode) {}
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     // TODO implement this method
