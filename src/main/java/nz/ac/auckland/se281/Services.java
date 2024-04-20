@@ -7,4 +7,8 @@ public abstract class Services {
   public Services(String referenceNumber) {
     this.referenceNumber = referenceNumber;
   }
+
+  public String getReferenceNumber() {
+    return referenceNumber;
+  }
 }

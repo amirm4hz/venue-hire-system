@@ -11,10 +11,6 @@ public class Catering extends Services {
     this.cateringCost = cateringCost;
   }
 
-  public String getReferenceNumber() {
-    return referenceNumber;
-  }
-
   public String getCateringType() {
     return cateringType;
   }
