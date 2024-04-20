@@ -24,11 +24,6 @@ public class VenueHireSystem {
     if (venues.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
       return;
-    }
-    // if their is no set date we cannot print the venues
-    if (this.setDate.isEmpty()) {
-      MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
-      return;
     } else if (venues.size() == 1) {
       MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
     } else if (venues.size() < 10) {
@@ -48,6 +43,10 @@ public class VenueHireSystem {
   }
 
   public String getNextAvailableDate(String venueCode) {
+    // if their is no set date we cannot print the venues
+    if (this.setDate.isEmpty()) {
+      return "";
+    }
     boolean bookingExistsForVenue = false; // boolean to check if booking exists for venue
     LocalDate nextAvailableDate = null;
     for (Bookings booking : bookings) { // for loop to check if booking exists for venue
