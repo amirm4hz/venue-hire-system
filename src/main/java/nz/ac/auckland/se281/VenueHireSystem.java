@@ -12,10 +12,12 @@ public class VenueHireSystem {
   private String setDate = "";
   private List<Venue> venues;
   private List<Bookings> bookings;
+  private List<Services> services;
 
   public VenueHireSystem() {
     this.venues = new ArrayList<>();
     this.bookings = new ArrayList<>();
+    this.services = new ArrayList<>();
   }
 
   // logic for print venues
@@ -308,8 +310,27 @@ public class VenueHireSystem {
     }
   }
 
+  public boolean doesBookingExist(String bookingReference) {
+    for (Bookings booking : bookings) {
+      if (booking.getBookingReference().equals(bookingReference)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    // TODO implement this method
+    if (!doesBookingExist(bookingReference)) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
+      return;
+    } else {
+      // add the catering type, catering cost and the booking reference to the services array list
+      Catering newCatering =
+          new Catering(bookingReference, cateringType.getName(), cateringType.getCostPerPerson());
+      services.add(newCatering);
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+          "Catering" + " (" + cateringType.getName() + ")", bookingReference);
+    }
   }
 
   public void addServiceMusic(String bookingReference) {
