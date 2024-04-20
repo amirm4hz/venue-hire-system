@@ -396,15 +396,13 @@ public class VenueHireSystem {
       }
       if (service instanceof Music) {
         Music music = (Music) service;
-        int cost = music.getMusicCost();
-        newCostOne = Integer.parseInt(numberOfGuests) * cost;
+        newCostOne = music.getMusicCost();
         MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(Integer.toString(newCostOne));
       }
       if (service instanceof Floral) {
         Floral floral = (Floral) service;
         String type = floral.getFloralType();
-        int cost = floral.getFloralCost();
-        newCostTwo = Integer.parseInt(numberOfGuests) * cost;
+        newCostTwo = floral.getFloralCost();
         MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(type, Integer.toString(newCostTwo));
       }
     }
