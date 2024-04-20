@@ -311,6 +311,7 @@ public class VenueHireSystem {
   }
 
   public boolean doesBookingExist(String bookingReference) {
+    // for loop to check if booking exists
     for (Bookings booking : bookings) {
       if (booking.getBookingReference().equals(bookingReference)) {
         return true;
@@ -337,6 +338,7 @@ public class VenueHireSystem {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
       return;
     }
+    // add the music type, music cost and the booking reference to the services array list
     Music newMusic = new Music(bookingReference, "Music", 500);
     services.add(newMusic);
     MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
@@ -347,6 +349,7 @@ public class VenueHireSystem {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
       return;
     }
+    // add the floral type, floral cost and the booking reference to the services array list
     Floral newFloral = new Floral(bookingReference, floralType.getName(), floralType.getCost());
     services.add(newFloral);
     MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
@@ -366,6 +369,7 @@ public class VenueHireSystem {
     String venueCode = "";
     String hireFee = "";
 
+    // for loop to get the booking reference, email, booking date, number of guests and venue code
     for (Bookings booking : bookings) {
       if (booking.getBookingReference().equals(bookingReference)) {
         email = booking.getEmail();
@@ -374,15 +378,20 @@ public class VenueHireSystem {
         venueCode = booking.getVenueCode();
       }
     }
+
+    // for loop to get the venue name and hire fee
     for (Venue venue : venues) {
       if (venue.getVenueCode().equals(venueCode)) {
         venueName = venue.getVenueName();
         hireFee = venue.getHireFee();
       }
     }
+    // print the top half of the invoice
     MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
         bookingReference, email, setDate, bookingDate, numberOfGuests, venueName);
     MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(hireFee);
+
+    // for loop to get the catering, music and floral services
     int newCost = 0;
     int newCostOne = 0;
     int newCostTwo = 0;
@@ -406,6 +415,7 @@ public class VenueHireSystem {
         MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(type, Integer.toString(newCostTwo));
       }
     }
+    // calculate the total cost of the invoice
     int totalCost = Integer.parseInt(hireFee) + newCost + newCostOne + newCostTwo;
     MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(Integer.toString(totalCost));
   }
