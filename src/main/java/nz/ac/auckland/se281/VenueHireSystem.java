@@ -337,7 +337,7 @@ public class VenueHireSystem {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
       return;
     }
-    Music newMusic = new Music(bookingReference, "Music", 1000);
+    Music newMusic = new Music(bookingReference, "Music", 500);
     services.add(newMusic);
     MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
   }
